@@ -18,7 +18,7 @@ export default function useBookSearch(query, pageNumber) {
     axios({
       method: "GET",
       url: "http://openlibrary.org/search.json",
-      // q = search term and page = page number in the API
+      // q = search term & page = page number in the API
       params: { q: query, page: pageNumber },
       // Use the cancelToken to cancel the previous request
       cancelToken: new axios.CancelToken((c) => (cancel = c)),
@@ -26,6 +26,7 @@ export default function useBookSearch(query, pageNumber) {
       .then((res) => {
         setBooks((prevBooks) => {
           return [
+            // Use set to remove duplicates and spread to add into array
             ...new Set([...prevBooks, ...res.data.docs.map((b) => b.title)]),
           ];
         });

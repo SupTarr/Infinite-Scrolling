@@ -1,5 +1,6 @@
 import React, { useState, useRef, useCallback } from "react";
 import useBookSearch from "./useBookSearch";
+import './index.css'
 
 function App() {
   const [query, setQuery] = useState("");
@@ -32,9 +33,9 @@ function App() {
     <>
       <input type="text" onChange={handleSearch} />
       {books.map((book, index) => {
-        if (books.length === index + 1) {
+        if (Math.ceil(books.length * 0.9) === index + 1) {
           return (
-            <div ref={lastBookElementRef} key={index}>
+            <div id="last" ref={lastBookElementRef} key={index}>
               {book}
             </div>
           );
