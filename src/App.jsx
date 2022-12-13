@@ -31,11 +31,12 @@ function App() {
   useBookSearch(query, pageNumber);
   return (
     <>
+      <h1>Book Searching</h1>
       <input type="text" onChange={handleSearch} />
       {books.map((book, index) => {
         if (Math.ceil(books.length * 0.9) === index + 1) {
           return (
-            <div id="last" ref={lastBookElementRef} key={index}>
+            <div ref={lastBookElementRef} key={index}>
               {book}
             </div>
           );
