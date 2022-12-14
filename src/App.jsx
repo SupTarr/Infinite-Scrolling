@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback } from "react";
 import useBookSearch from "./useBookSearch";
-import './index.css'
+import "./index.css";
 
 function App() {
   const [query, setQuery] = useState("");
@@ -28,7 +28,6 @@ function App() {
     setPageNumber(1);
   }
 
-  useBookSearch(query, pageNumber);
   return (
     <>
       <h1>Book Searching</h1>

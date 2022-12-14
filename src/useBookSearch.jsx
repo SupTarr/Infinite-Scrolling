@@ -38,5 +38,6 @@ export default function useBookSearch(query, pageNumber) {
     }, 1000);
     return () => clearTimeout(getData);
   }, [query, pageNumber]);
+  
   return { loading, error, books, hasMore };
 }
