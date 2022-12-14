@@ -33,9 +33,10 @@ function App() {
       <h1>Book Searching</h1>
       <input type="text" onChange={handleSearch} />
       {books.map((book, index) => {
-        if (Math.ceil(books.length * 0.9) === index + 1) {
+        // 1 page loads 100 elements and 90% of new element will trigger new page loading
+        if (books.length - 10 === index + 1) {
           return (
-            <div ref={lastBookElementRef} key={index}>
+            <div id="trigger" ref={lastBookElementRef} key={index}>
               {book}
             </div>
           );
