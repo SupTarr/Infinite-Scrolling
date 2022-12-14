@@ -14,30 +14,29 @@ export default function useBookSearch(query, pageNumber) {
   useEffect(() => {
     setLoading(true);
     setError(false);
-    let cancel;
-    axios({
-      method: "GET",
-      url: "https://openlibrary.org/search.json",
-      // q = search term & page = page number in the API
-      params: { q: query, page: pageNumber },
-      // Use the cancelToken to cancel the previous request
-      cancelToken: new axios.CancelToken((c) => (cancel = c)),
-    })
-      .then((res) => {
-        setBooks((prevBooks) => {
-          return [
-            // Use set to remove duplicates and spread to add into array
-            ...new Set([...prevBooks, ...res.data.docs.map((b) => b.title)]),
-          ];
-        });
-        setHasMore(res.data.docs.length > 0);
-        setLoading(false);
+    const getData = setTimeout(() => {
+      axios({
+        method: "GET",
+        url: "https://openlibrary.org/search.json",
+        // q = search term & page = page number in the API
+        params: { q: query, page: pageNumber },
       })
-      .catch((e) => {
-        if (axios.isCancel(e)) return;
-        setError(true);
-      });
-    return () => cancel();
+        .then((res) => {
+          setBooks((prevBooks) => {
+            return [
+              // Use set to remove duplicates and spread to add into array
+              ...new Set([...prevBooks, ...res.data.docs.map((b) => b.title)]),
+            ];
+          });
+          setHasMore(res.data.docs.length > 0);
+          setLoading(false);
+        })
+        .catch((e) => {
+          if (axios.isCancel(e)) return;
+          setError(true);
+        });
+    }, 1000);
+    return () => clearTimeout(getData);
   }, [query, pageNumber]);
   return { loading, error, books, hasMore };
 }
